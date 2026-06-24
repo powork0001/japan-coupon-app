@@ -1,0 +1,294 @@
+[
+  {
+    "id": 1,
+    "cat": "drugstore",
+    "iconKey": "donki",
+    "name": "돈키호테",
+    "nameJp": "ドン・キホーテ",
+    "desc": "외국인 전용 할인 쿠폰 · 면세 가능",
+    "maxDiscount": "10%",
+    "minDiscount": "5%",
+    "badge": "HOT",
+    "badgeType": "hot",
+    "coupons": [
+      {
+        "type": "외국인 할인",
+        "discount": "10%",
+        "desc": "¥3,000 이상 구매 시 10% 할인 (면세 제외 품목 적용)",
+        "expiry": "2025.12.31",
+        "note": "여권 제시 필수",
+        "link": "https://japanportal.donki-global.com/coupon/cp001_en.html"
+      }
+    ],
+    "info": [
+      {
+        "icon": "📍",
+        "title": "주요 지점",
+        "text": "신주쿠, 아키하바라, 시부야 등 전국 200+ 지점"
+      },
+      {
+        "icon": "🕐",
+        "title": "영업시간",
+        "text": "24시간 영업"
+      },
+      {
+        "icon": "💴",
+        "title": "면세 조건",
+        "text": "¥5,000 이상 구매 시 면세 가능"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "cat": "drugstore",
+    "iconKey": "matsukiyo",
+    "name": "마츠모토 키요시",
+    "nameJp": "マツモトキヨシ",
+    "desc": "드럭스토어 No.1 · 코스메 전문",
+    "maxDiscount": "8%",
+    "minDiscount": "3%",
+    "badge": "NEW",
+    "badgeType": "new",
+    "coupons": [
+      {
+        "type": "외국인 쿠폰",
+        "discount": "8%",
+        "desc": "화장품/스킨케어 전 품목 8% 추가 할인",
+        "expiry": "2025.09.30",
+        "note": "여권 제시·앱 다운로드 필요",
+        "link": ""
+      }
+    ],
+    "info": [
+      {
+        "icon": "📍",
+        "title": "주요 지점",
+        "text": "도쿄, 오사카, 나고야 등 전국 1,700+ 지점"
+      },
+      {
+        "icon": "🕐",
+        "title": "영업시간",
+        "text": "09:00 ~ 22:00"
+      },
+      {
+        "icon": "💴",
+        "title": "면세 조건",
+        "text": "¥5,000 이상 구매 시 면세"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "cat": "department",
+    "iconKey": "isetan",
+    "name": "이세탄 백화점",
+    "nameJp": "伊勢丹",
+    "desc": "신주쿠 명품 쇼핑 · 외국인 우대 서비스",
+    "maxDiscount": "5%",
+    "minDiscount": "2%",
+    "badge": "",
+    "badgeType": "",
+    "coupons": [
+      {
+        "type": "외국인 우대",
+        "discount": "5%",
+        "desc": "외국인 여행객 대상 구매 금액 5% 할인",
+        "expiry": "2025.12.31",
+        "note": "방문객 센터 방문 후 등록 필요",
+        "link": ""
+      }
+    ],
+    "info": [
+      {
+        "icon": "📍",
+        "title": "위치",
+        "text": "신주쿠역 동쪽 출구 도보 1분"
+      },
+      {
+        "icon": "🕐",
+        "title": "영업시간",
+        "text": "10:00 ~ 20:00"
+      },
+      {
+        "icon": "🛎️",
+        "title": "외국인 서비스",
+        "text": "한국어 가능 직원 상주"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "cat": "department",
+    "iconKey": "takashimaya",
+    "name": "다카시마야 백화점",
+    "nameJp": "高島屋",
+    "desc": "긴자·신주쿠 플래그십 · 면세 혜택",
+    "maxDiscount": "5%",
+    "minDiscount": "2%",
+    "badge": "",
+    "badgeType": "",
+    "coupons": [
+      {
+        "type": "외국인 쿠폰",
+        "discount": "5%",
+        "desc": "외국인 고객 전용 쿠폰, 세금 포함 5% OFF",
+        "expiry": "2025.12.31",
+        "note": "인포메이션 카운터 방문 필수",
+        "link": ""
+      }
+    ],
+    "info": [
+      {
+        "icon": "📍",
+        "title": "위치",
+        "text": "긴자, 신주쿠, 오사카, 교토 등"
+      },
+      {
+        "icon": "🕐",
+        "title": "영업시간",
+        "text": "10:00 ~ 20:00"
+      },
+      {
+        "icon": "💴",
+        "title": "면세",
+        "text": "¥5,500 이상 면세 가능"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "cat": "drugstore",
+    "iconKey": "cosmos",
+    "name": "코스모스",
+    "nameJp": "コスモス",
+    "desc": "규슈·주코쿠 지역 최저가 드럭스토어",
+    "maxDiscount": "상시저가",
+    "minDiscount": "쿠폰없음",
+    "badge": "",
+    "badgeType": "",
+    "coupons": [
+      {
+        "type": "상시 저가",
+        "discount": "최저가",
+        "desc": "별도 쿠폰 없이 상시 최저가 운영",
+        "expiry": "상시",
+        "note": "규슈·주코쿠 지역 한정",
+        "link": ""
+      }
+    ],
+    "info": [
+      {
+        "icon": "📍",
+        "title": "위치",
+        "text": "규슈, 주코쿠 중심 1,000+ 지점"
+      },
+      {
+        "icon": "🕐",
+        "title": "영업시간",
+        "text": "09:00 ~ 22:00"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "cat": "outlet",
+    "iconKey": "mitsui",
+    "name": "미쓰이 아울렛 파크",
+    "nameJp": "三井アウトレットパーク",
+    "desc": "국내외 브랜드 최대 70% 할인",
+    "maxDiscount": "70%",
+    "minDiscount": "30%",
+    "badge": "HOT",
+    "badgeType": "hot",
+    "coupons": [
+      {
+        "type": "외국인 쿠폰",
+        "discount": "추가5%",
+        "desc": "외국인 방문객 전용 추가 5% 할인",
+        "expiry": "2025.12.31",
+        "note": "인포메이션 센터 여권 제시",
+        "link": ""
+      }
+    ],
+    "info": [
+      {
+        "icon": "📍",
+        "title": "주요 지점",
+        "text": "린쿠, 마린피아 등 전국 13개소"
+      },
+      {
+        "icon": "🕐",
+        "title": "영업시간",
+        "text": "10:00 ~ 20:00"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "cat": "convenience",
+    "iconKey": "seven",
+    "name": "세븐일레븐",
+    "nameJp": "セブン-イレブン",
+    "desc": "7PAY · 방문 기념 쿠폰 제공",
+    "maxDiscount": "10%",
+    "minDiscount": "무료증정",
+    "badge": "",
+    "badgeType": "",
+    "coupons": [
+      {
+        "type": "앱 쿠폰",
+        "discount": "10%",
+        "desc": "7-Eleven Japan 앱 가입 시 특정 상품 10% 할인",
+        "expiry": "입국 후 7일",
+        "note": "앱 다운로드 필수",
+        "link": ""
+      }
+    ],
+    "info": [
+      {
+        "icon": "📍",
+        "title": "위치",
+        "text": "전국 21,000+ 지점"
+      },
+      {
+        "icon": "🕐",
+        "title": "영업시간",
+        "text": "24시간 영업"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "cat": "drugstore",
+    "iconKey": "welcia",
+    "name": "웰시아",
+    "nameJp": "ウエルシア",
+    "desc": "외국인 인기 드럭스토어 · 와온포인트 적립",
+    "maxDiscount": "3%",
+    "minDiscount": "1%",
+    "badge": "",
+    "badgeType": "",
+    "coupons": [
+      {
+        "type": "포인트 쿠폰",
+        "discount": "3%",
+        "desc": "WAON POINT 카드 발급 시 3% 포인트 적립",
+        "expiry": "상시",
+        "note": "WAON POINT 카드 발급 필요",
+        "link": ""
+      }
+    ],
+    "info": [
+      {
+        "icon": "📍",
+        "title": "위치",
+        "text": "간토 중심 2,000+ 지점"
+      },
+      {
+        "icon": "🕐",
+        "title": "영업시간",
+        "text": "09:00 ~ 22:00"
+      }
+    ]
+  }
+]
