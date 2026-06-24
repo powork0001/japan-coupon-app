@@ -8,31 +8,25 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-/* ── 디자인 토큰 ── */
 :root,[data-theme="light"]{
   --bg:#f7f6f2;--surface:#ffffff;--surface-2:#f9f8f5;--surface-offset:#f3f0ec;
   --border:#e8e5e0;--divider:#eeebe6;
   --text:#28251d;--text-muted:#7a7974;--text-faint:#bab9b4;--text-inv:#ffffff;
-  --red:#d32f2f;--red-hover:#b71c1c;--red-light:#fff0f0;--red-highlight:#ffcdd2;
-  --green:#2e7d32;--green-light:#f0fff4;
-  --blue:#1565c0;--blue-light:#f0f4ff;
-  --gold:#e65100;--gold-light:#fff8f0;
-  --purple:#6a1b9a;--purple-light:#f8f0ff;
-  --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;
+  --red:#d32f2f;--red-hover:#b71c1c;--red-light:#fff5f5;
+  --green:#2e7d32;--gold:#e65100;
+  --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;--radius-xl:1rem;--radius-2xl:1.25rem;--radius-full:9999px;
   --shadow-sm:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.05);
-  --shadow-lg:0 12px 40px rgba(0,0,0,.12),0 4px 12px rgba(0,0,0,.06);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.1),0 4px 12px rgba(0,0,0,.06);
   --font:"Noto Sans KR",sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
+  --content:960px;
 }
 [data-theme="dark"]{
   --bg:#111110;--surface:#1c1b19;--surface-2:#222120;--surface-offset:#272624;
-  --border:#333230;--divider:#2a2927;
-  --text:#d4d3d0;--text-muted:#7a7977;--text-faint:#4a4947;--text-inv:#111110;
-  --red:#ef9a9a;--red-hover:#e57373;--red-light:#2a1515;--red-highlight:#3a1f1f;
-  --green:#a5d6a7;--green-light:#0d1f0e;
-  --blue:#90caf9;--blue-light:#0d1829;
-  --gold:#ffcc80;--gold-light:#1f1408;
+  --border:#333230;--text:#d4d3d0;--text-muted:#7a7977;--text-faint:#4a4947;
+  --red:#ef9a9a;--red-hover:#e57373;--red-light:#2a1515;
+  --green:#a5d6a7;--gold:#ffcc80;
   --shadow-sm:0 1px 3px rgba(0,0,0,.3);--shadow-md:0 4px 16px rgba(0,0,0,.4);--shadow-lg:0 12px 40px rgba(0,0,0,.5);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -42,134 +36,105 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
 a{text-decoration:none;color:inherit}
 img{display:block;max-width:100%}
 
-/* ── 앱 레이아웃 ── */
-.app{max-width:480px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;background:var(--bg);position:relative}
-
 /* ── 헤더 ── */
-.header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-sm)}
-.logo{display:flex;align-items:center;gap:8px}
+.header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.header-inner{max-width:var(--content);margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .logo-icon{width:32px;height:32px}
-.logo-text{font-size:16px;font-weight:900;letter-spacing:-.03em;color:var(--text)}
+.logo-text{font-size:17px;font-weight:900;letter-spacing:-.03em}
 .logo-text em{color:var(--red);font-style:normal}
-.header-right{display:flex;gap:4px}
-.icon-btn{width:36px;height:36px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:background 160ms var(--ease),color 160ms var(--ease)}
+
+/* 데스크탑 검색바 */
+.header-search{flex:1;max-width:400px;display:none}
+@media(min-width:640px){.header-search{display:block}}
+.search-input-wrap{position:relative}
+.search-input-wrap input{width:100%;padding:8px 14px 8px 36px;border:1px solid var(--border);border-radius:var(--radius-full);background:var(--surface-offset);font-size:13px;color:var(--text);outline:none;transition:border-color 160ms,box-shadow 160ms}
+.search-input-wrap input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(211,47,47,.1)}
+.search-input-wrap input::placeholder{color:var(--text-faint)}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-faint);pointer-events:none}
+.header-right{display:flex;gap:4px;flex-shrink:0}
+.icon-btn{width:36px;height:36px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:background 160ms,color 160ms}
 .icon-btn:hover{background:var(--surface-offset);color:var(--text)}
-.icon-btn:active{background:var(--border)}
+/* 모바일 전용 검색 버튼 */
+.mobile-search-btn{display:flex}
+@media(min-width:640px){.mobile-search-btn{display:none}}
 
 /* ── 카테고리 탭 ── */
-.cat-bar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;padding:0 8px}
-.cat-bar::-webkit-scrollbar{display:none}
-.cat-btn{display:flex;align-items:center;gap:5px;padding:12px 10px;font-size:13px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:color 160ms var(--ease),border-color 160ms var(--ease)}
+.cat-bar{background:var(--surface);border-bottom:1px solid var(--border)}
+.cat-bar-inner{max-width:var(--content);margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 12px}
+.cat-bar-inner::-webkit-scrollbar{display:none}
+.cat-btn{display:flex;align-items:center;gap:5px;padding:12px 10px;font-size:13px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:color 160ms,border-color 160ms}
 .cat-btn:hover{color:var(--text)}
 .cat-btn.active{color:var(--red);border-bottom-color:var(--red);font-weight:700}
 .cat-icon{font-size:15px}
+/* 데스크탑에선 탭 더 넉넉하게 */
+@media(min-width:640px){.cat-btn{padding:14px 16px;font-size:14px}}
 
-/* ── 컨텐츠 ── */
-.content{flex:1;padding:16px}
-.list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.list-title{font-size:13px;font-weight:700;color:var(--text)}
+/* ── 메인 레이아웃 ── */
+.main-wrap{max-width:var(--content);margin:0 auto;padding:20px 20px 32px}
+@media(min-width:960px){
+  .main-wrap{display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start}
+}
+
+/* ── 사이드바 필터 (데스크탑) ── */
+.sidebar{display:none}
+@media(min-width:960px){
+  .sidebar{display:block;position:sticky;top:80px}
+  .sidebar-title{font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding:0 4px}
+  .sidebar-list{display:flex;flex-direction:column;gap:2px}
+  .sidebar-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-lg);font-size:14px;font-weight:500;color:var(--text-muted);width:100%;text-align:left;transition:background 160ms,color 160ms}
+  .sidebar-btn:hover{background:var(--surface-offset);color:var(--text)}
+  .sidebar-btn.active{background:var(--red-light);color:var(--red);font-weight:700}
+  .sidebar-btn .cat-icon{font-size:18px}
+  .sidebar-count{margin-left:auto;font-size:11px;background:var(--surface-offset);padding:2px 7px;border-radius:var(--radius-full);color:var(--text-muted)}
+  .sidebar-btn.active .sidebar-count{background:rgba(211,47,47,.12);color:var(--red)}
+}
+
+/* ── 리스트 영역 ── */
+.list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.list-title{font-size:15px;font-weight:700}
 .list-count{font-size:12px;color:var(--text-muted);background:var(--surface-offset);padding:3px 10px;border-radius:var(--radius-full)}
-.store-list{display:flex;flex-direction:column;gap:10px}
+
+/* ── 그리드: 모바일 1열 → 태블릿 2열 → 데스크탑 2열 ── */
+.store-grid{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:540px) and (max-width:959px){.store-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:960px){.store-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
 
 /* ── 매장 카드 ── */
 .store-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:box-shadow 180ms var(--ease),transform 180ms var(--ease),border-color 180ms var(--ease);box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
-.store-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px);border-color:var(--red)}
-.store-card:active{transform:translateY(0);box-shadow:var(--shadow-sm)}
-
-/* 뱃지 */
-.badge{position:absolute;top:10px;left:0;font-size:10px;font-weight:700;padding:2px 8px 2px 10px;border-radius:0 var(--radius-full) var(--radius-full) 0;letter-spacing:.04em;text-transform:uppercase;color:#fff}
-.badge.hot{background:var(--red)}
-.badge.new{background:var(--green)}
-
-/* 로고 */
+.store-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--red)}
+.store-card:active{transform:translateY(0)}
+.badge{position:absolute;top:10px;left:0;font-size:10px;font-weight:700;padding:2px 8px 2px 10px;border-radius:0 var(--radius-full) var(--radius-full) 0;letter-spacing:.04em;text-transform:uppercase;color:#fff;z-index:1}
+.badge.hot{background:var(--red)}.badge.new{background:var(--green)}
 .store-logo{width:52px;height:52px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
 .store-logo svg{width:52px;height:52px}
-
-/* 정보 */
 .store-info{flex:1;min-width:0}
-.store-name{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:baseline;gap:5px}
+.store-name{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
 .store-name-jp{font-size:11px;color:var(--text-muted);font-weight:400}
 .store-desc{font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-/* 할인율 */
 .store-discount{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
 .discount-max{font-size:15px;font-weight:900;color:var(--red);white-space:nowrap}
 .discount-min{font-size:11px;color:var(--text-faint);white-space:nowrap}
 .chevron{color:var(--text-faint);margin-left:2px;flex-shrink:0}
 
-/* ── 상세 페이지 ── */
-.detail{position:fixed;inset:0;max-width:480px;margin:0 auto;left:50%;transform:translateX(calc(100% - 50%));background:var(--bg);z-index:200;overflow-y:auto;overflow-x:hidden;transition:transform .32s var(--ease)}
-.detail.open{transform:translateX(-50%)}
-
-.detail-header{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-sm)}
-.back-btn{width:36px;height:36px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;transition:background 160ms var(--ease)}
-.back-btn:hover{background:var(--surface-offset)}
-.detail-title{font-size:15px;font-weight:700;flex:1}
-
-/* 히어로 */
-.detail-hero{padding:32px 20px 28px;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#c62828 0%,#e53935 50%,#ef5350 100%)}
-.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(255,255,255,.1) 0%,transparent 60%)}
-.hero-logo{width:80px;height:80px;border-radius:20px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);box-shadow:0 8px 24px rgba(0,0,0,.2);overflow:hidden;position:relative;flex-shrink:0}
-.hero-logo svg{width:80px;height:80px}
-.hero-name{font-size:22px;font-weight:900;color:#fff;text-align:center;position:relative}
-.hero-name-jp{font-size:13px;color:rgba(255,255,255,.75);position:relative}
-.hero-pills{display:flex;gap:8px;position:relative}
-.pill{padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:700}
-.pill.max{background:rgba(255,255,255,.95);color:var(--red)}
-.pill.min{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3)}
-
-/* 상세 컨텐츠 */
-.detail-body{padding:20px 16px 32px}
-.section{margin-bottom:24px}
-.section-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
-
-/* 쿠폰 카드 */
-.coupon-card{background:var(--surface);border:1.5px dashed var(--border);border-radius:var(--radius-xl);padding:18px;position:relative;overflow:hidden}
-.coupon-card::before,.coupon-card::after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:var(--bg);top:50%;transform:translateY(-50%)}
-.coupon-card::before{left:-11px}
-.coupon-card::after{right:-11px}
-.coupon-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
-.coupon-type-label{font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
-.coupon-store{font-size:12px;color:var(--text-muted)}
-.coupon-big{text-align:right}
-.coupon-num{font-size:36px;font-weight:900;color:var(--red);line-height:1}
-.coupon-off{font-size:13px;font-weight:700;color:var(--red)}
-.coupon-desc{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:12px}
-.coupon-hr{border:none;border-top:1.5px dashed var(--border);margin-bottom:12px}
-.coupon-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--text-faint)}
-.coupon-meta span strong{display:block;color:var(--text-muted);font-size:11px;margin-bottom:1px}
-
-.coupon-link-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:var(--red);color:#fff;border-radius:var(--radius-lg);font-size:14px;font-weight:700;margin-top:14px;transition:background 160ms var(--ease),transform 160ms var(--ease);box-shadow:0 4px 16px rgba(211,47,47,.3)}
-.coupon-link-btn:hover{background:var(--red-hover);transform:translateY(-1px)}
-.coupon-link-btn:active{transform:translateY(0)}
-
-/* 정보 리스트 */
-.info-list{display:flex;flex-direction:column;gap:8px}
-.info-item{display:flex;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px}
-.info-emoji{font-size:18px;flex-shrink:0;margin-top:1px}
-.info-text strong{display:block;font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px}
-.info-text span{font-size:12px;color:var(--text-muted);line-height:1.5}
-
-/* ── 하단 탭바 ── */
-.bottom-nav{background:var(--surface);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom,0)}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;color:var(--text-faint);transition:color 160ms var(--ease)}
-.nav-item.active{color:var(--red)}
-.nav-item svg{width:22px;height:22px}
-.nav-label{font-size:10px;font-weight:500}
-
 /* ── 빈 상태 ── */
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;color:var(--text-muted);text-align:center;gap:12px}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;color:var(--text-muted);text-align:center;gap:12px;grid-column:1/-1}
 .empty-icon{font-size:48px;opacity:.4}
 .empty h3{font-size:15px;font-weight:700;color:var(--text)}
 .empty p{font-size:13px;max-width:28ch;line-height:1.6}
+
+/* ── 하단 탭바 (모바일) ── */
+.bottom-nav{background:var(--surface);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom,0);position:sticky;bottom:0}
+@media(min-width:960px){.bottom-nav{display:none}}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;color:var(--text-faint);transition:color 160ms}
+.nav-item.active{color:var(--red)}
+.nav-item svg{width:22px;height:22px}
+.nav-label{font-size:10px;font-weight:500}
 </style>
 </head>
 <body>
-<div class="app">
-
-  <!-- 헤더 -->
-  <header class="header">
+<header class="header">
+  <div class="header-inner">
     <div class="logo">
       <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
         <circle cx="16" cy="16" r="15" fill="#d32f2f" opacity=".12"/>
@@ -179,144 +144,113 @@ img{display:block;max-width:100%}
       </svg>
       <span class="logo-text">일본쿠폰 <em>JAPAN</em></span>
     </div>
+    <div class="header-search">
+      <div class="search-input-wrap">
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" id="search-input" placeholder="매장명 검색..." aria-label="매장 검색">
+      </div>
+    </div>
     <div class="header-right">
-      <button class="icon-btn" aria-label="검색">
+      <button class="icon-btn mobile-search-btn" aria-label="검색">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
       <button class="icon-btn" data-theme-toggle aria-label="다크모드 전환">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
     </div>
-  </header>
-
-  <!-- 카테고리 탭 -->
-  <nav class="cat-bar" role="tablist">
-    <button class="cat-btn active" data-cat="all" role="tab"><span class="cat-icon">🗾</span>전체</button>
-    <button class="cat-btn" data-cat="drugstore" role="tab"><span class="cat-icon">💊</span>드럭스토어</button>
-    <button class="cat-btn" data-cat="department" role="tab"><span class="cat-icon">🏬</span>백화점</button>
-    <button class="cat-btn" data-cat="convenience" role="tab"><span class="cat-icon">🏪</span>편의점</button>
-    <button class="cat-btn" data-cat="outlet" role="tab"><span class="cat-icon">🛍️</span>아울렛</button>
+  </div>
+  <!-- 모바일 카테고리 탭 -->
+  <nav class="cat-bar" id="mobile-cat-bar" role="tablist">
+    <div class="cat-bar-inner">
+      <button class="cat-btn active" data-cat="all" role="tab"><span class="cat-icon">🗾</span>전체</button>
+      <button class="cat-btn" data-cat="drugstore" role="tab"><span class="cat-icon">💊</span>드럭스토어</button>
+      <button class="cat-btn" data-cat="department" role="tab"><span class="cat-icon">🏬</span>백화점</button>
+      <button class="cat-btn" data-cat="convenience" role="tab"><span class="cat-icon">🏪</span>편의점</button>
+      <button class="cat-btn" data-cat="outlet" role="tab"><span class="cat-icon">🛍️</span>아울렛</button>
+    </div>
   </nav>
+</header>
+
+<div class="main-wrap">
+  <!-- 사이드바 (데스크탑) -->
+  <aside class="sidebar">
+    <div class="sidebar-title">카테고리</div>
+    <div class="sidebar-list" id="sidebar-list">
+      <button class="sidebar-btn active" data-cat="all"><span class="cat-icon">🗾</span>전체<span class="sidebar-count" id="cnt-all">0</span></button>
+      <button class="sidebar-btn" data-cat="drugstore"><span class="cat-icon">💊</span>드럭스토어<span class="sidebar-count" id="cnt-drugstore">0</span></button>
+      <button class="sidebar-btn" data-cat="department"><span class="cat-icon">🏬</span>백화점<span class="sidebar-count" id="cnt-department">0</span></button>
+      <button class="sidebar-btn" data-cat="convenience"><span class="cat-icon">🏪</span>편의점<span class="sidebar-count" id="cnt-convenience">0</span></button>
+      <button class="sidebar-btn" data-cat="outlet"><span class="cat-icon">🛍️</span>아울렛<span class="sidebar-count" id="cnt-outlet">0</span></button>
+    </div>
+  </aside>
 
   <!-- 리스트 -->
-  <main class="content">
+  <main>
     <div class="list-header">
       <span class="list-title" id="list-title">전체 쿠폰</span>
       <span class="list-count" id="list-count">로딩중...</span>
     </div>
-    <div class="store-list" id="store-list">
+    <div class="store-grid" id="store-grid">
       <div class="empty"><div class="empty-icon">⏳</div><h3>불러오는 중</h3><p>쿠폰 정보를 가져오고 있습니다.</p></div>
     </div>
   </main>
-
-  <!-- 하단 탭바 -->
-  <nav class="bottom-nav">
-    <button class="nav-item active">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
-      <span class="nav-label">홈</span>
-    </button>
-    <button class="nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-      <span class="nav-label">찜목록</span>
-    </button>
-    <button class="nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      <span class="nav-label">지도</span>
-    </button>
-    <button class="nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-      <span class="nav-label">내정보</span>
-    </button>
-  </nav>
 </div>
 
-<!-- 상세 페이지 -->
-<div class="detail" id="detail" role="dialog" aria-modal="true" aria-label="매장 상세">
-  <header class="detail-header">
-    <button class="back-btn" id="back-btn" aria-label="뒤로가기">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-    </button>
-    <span class="detail-title" id="detail-title">쿠폰 상세</span>
-    <button class="icon-btn" aria-label="공유">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-    </button>
-  </header>
-  <div id="detail-body"></div>
-</div>
+<nav class="bottom-nav">
+  <button class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg><span class="nav-label">홈</span></button>
+  <button class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg><span class="nav-label">찜목록</span></button>
+  <button class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="nav-label">지도</span></button>
+  <button class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg><span class="nav-label">내정보</span></button>
+</nav>
 
 <script>
-// ── 브랜드 SVG 아이콘 ──
 const ICONS = {
-  donki: `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="52" height="52" fill="#FFD700"/>
-    <text x="26" y="22" text-anchor="middle" font-size="14" font-weight="900" fill="#e60012" font-family="sans-serif">ドン</text>
-    <text x="26" y="38" text-anchor="middle" font-size="11" font-weight="700" fill="#e60012" font-family="sans-serif">キホーテ</text>
-  </svg>`,
-  matsukiyo: `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="52" height="52" fill="#00843d"/>
-    <text x="26" y="24" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="sans-serif">マツ</text>
-    <text x="26" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="sans-serif">キヨシ</text>
-  </svg>`,
-  isetan: `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="52" height="52" fill="#1a237e"/>
-    <text x="26" y="34" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="serif">伊勢丹</text>
-  </svg>`,
-  takashimaya: `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="52" height="52" fill="#8b0000"/>
-    <text x="26" y="34" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="serif">高島屋</text>
-  </svg>`,
-  cosmos: `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="52" height="52" fill="#d81b60"/>
-    <text x="26" y="24" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">コスモス</text>
-    <text x="26" y="40" text-anchor="middle" font-size="10" font-weight="500" fill="rgba(255,255,255,.8)" font-family="sans-serif">COSMOS</text>
-  </svg>`,
-  mitsui: `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="52" height="52" fill="#e65100"/>
-    <text x="26" y="23" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="sans-serif">三井</text>
-    <text x="26" y="37" text-anchor="middle" font-size="9" font-weight="700" fill="rgba(255,255,255,.9)" font-family="sans-serif">OUTLET</text>
-  </svg>`,
-  seven: `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="52" height="52" fill="#1b5e20"/>
-    <rect x="0" y="18" width="52" height="17" fill="#c62828"/>
-    <text x="26" y="32" text-anchor="middle" font-size="20" font-weight="900" fill="#fff" font-family="sans-serif">7</text>
-  </svg>`,
-  welcia: `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="52" height="52" fill="#0d47a1"/>
-    <text x="26" y="24" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">ウエル</text>
-    <text x="26" y="40" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">シア</text>
-  </svg>`,
+  donki:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#FFD700"/><text x="26" y="22" text-anchor="middle" font-size="14" font-weight="900" fill="#e60012" font-family="sans-serif">ドン</text><text x="26" y="38" text-anchor="middle" font-size="11" font-weight="700" fill="#e60012" font-family="sans-serif">キホーテ</text></svg>`,
+  matsukiyo:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#00843d"/><text x="26" y="24" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="sans-serif">マツ</text><text x="26" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="sans-serif">キヨシ</text></svg>`,
+  isetan:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#1a237e"/><text x="26" y="34" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="serif">伊勢丹</text></svg>`,
+  takashimaya:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#8b0000"/><text x="26" y="34" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="serif">高島屋</text></svg>`,
+  cosmos:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#d81b60"/><text x="26" y="24" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">コスモス</text><text x="26" y="40" text-anchor="middle" font-size="10" font-weight="500" fill="rgba(255,255,255,.8)" font-family="sans-serif">COSMOS</text></svg>`,
+  mitsui:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#e65100"/><text x="26" y="23" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="sans-serif">三井</text><text x="26" y="37" text-anchor="middle" font-size="9" font-weight="700" fill="rgba(255,255,255,.9)" font-family="sans-serif">OUTLET</text></svg>`,
+  seven:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#1b5e20"/><rect x="0" y="18" width="52" height="17" fill="#c62828"/><text x="26" y="32" text-anchor="middle" font-size="20" font-weight="900" fill="#fff" font-family="sans-serif">7</text></svg>`,
+  welcia:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#0d47a1"/><text x="26" y="24" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">ウエル</text><text x="26" y="40" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">シア</text></svg>`,
 };
+const CAT_LABELS={all:'전체 쿠폰',drugstore:'드럭스토어',department:'백화점',convenience:'편의점',outlet:'아울렛'};
+const CATS=['all','drugstore','department','convenience','outlet'];
+let stores=[], currentCat='all', searchQ='';
 
-const CAT_LABELS = {all:'전체 쿠폰',drugstore:'드럭스토어',department:'백화점',convenience:'편의점',outlet:'아울렛'};
-let stores = [];
-let currentCat = 'all';
-
-// ── 데이터 로드 (coupons.json) ──
-async function loadData() {
-  try {
-    const res = await fetch('./coupons.json');
-    stores = await res.json();
-  } catch(e) {
-    // fallback: 내장 샘플 데이터
-    stores = [];
-  }
-  renderList(currentCat);
+async function loadData(){
+  try{ const r=await fetch('./coupons.json'); stores=await r.json(); }
+  catch(e){ stores=[]; }
+  updateCounts(); renderList();
 }
 
-// ── 리스트 렌더 ──
-function renderList(cat) {
-  const filtered = cat === 'all' ? stores : stores.filter(s => s.cat === cat);
-  document.getElementById('list-title').textContent = CAT_LABELS[cat] || '쿠폰';
-  document.getElementById('list-count').textContent = filtered.length + '개';
-  const el = document.getElementById('store-list');
-  if (!filtered.length) {
-    el.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><h3>쿠폰이 없습니다</h3><p>해당 카테고리의 쿠폰이 아직 없습니다.</p></div>`;
+function updateCounts(){
+  CATS.forEach(c=>{
+    const cnt=c==='all'?stores.length:stores.filter(s=>s.cat===c).length;
+    const el=document.getElementById('cnt-'+c);
+    if(el) el.textContent=cnt;
+  });
+}
+
+function getFiltered(){
+  let list=currentCat==='all'?stores:stores.filter(s=>s.cat===currentCat);
+  if(searchQ) list=list.filter(s=>s.name.includes(searchQ)||s.nameJp.includes(searchQ)||s.desc.includes(searchQ));
+  return list;
+}
+
+function renderList(){
+  const filtered=getFiltered();
+  document.getElementById('list-title').textContent=CAT_LABELS[currentCat]||'쿠폰';
+  document.getElementById('list-count').textContent=filtered.length+'개';
+  const el=document.getElementById('store-grid');
+  if(!filtered.length){
+    el.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><h3>쿠폰이 없습니다</h3><p>해당 카테고리의 쿠폰이 아직 없습니다.</p></div>`;
     return;
   }
-  el.innerHTML = filtered.map(s => `
+  el.innerHTML=filtered.map(s=>`
     <article class="store-card" data-id="${s.id}" tabindex="0" role="button" aria-label="${s.name} 상세 보기">
-      ${s.badge ? `<span class="badge ${s.badgeType}">${s.badge}</span>` : ''}
-      <div class="store-logo">${ICONS[s.iconKey] || `<span style="font-size:24px">🏬</span>`}</div>
+      ${s.badge?`<span class="badge ${s.badgeType}">${s.badge}</span>`:''}
+      <div class="store-logo">${ICONS[s.iconKey]||'<span style="font-size:24px">🏬</span>'}</div>
       <div class="store-info">
         <div class="store-name">${s.name}<span class="store-name-jp">${s.nameJp}</span></div>
         <div class="store-desc">${s.desc}</div>
@@ -327,88 +261,34 @@ function renderList(cat) {
       </div>
       <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
     </article>`).join('');
-  el.querySelectorAll('.store-card').forEach(c => {
-    c.addEventListener('click', () => openDetail(+c.dataset.id));
-    c.addEventListener('keydown', e => { if(e.key==='Enter') openDetail(+c.dataset.id); });
+  el.querySelectorAll('.store-card').forEach(c=>{
+    c.addEventListener('click',()=>{ location.href=`./detail.html?id=${c.dataset.id}`; });
+    c.addEventListener('keydown',e=>{ if(e.key==='Enter') location.href=`./detail.html?id=${c.dataset.id}`; });
   });
 }
 
-// ── 상세 페이지 ──
-function openDetail(id) {
-  const s = stores.find(x => x.id === id);
-  if (!s) return;
-  document.getElementById('detail-title').textContent = s.name;
-  const heroIcon = (ICONS[s.iconKey] || '').replace(/width="52" height="52"/, 'width="80" height="80"');
-  const couponsHtml = s.coupons.map(c => `
-    <div class="coupon-card">
-      <div class="coupon-top">
-        <div><div class="coupon-type-label">${c.type}</div><div class="coupon-store">${s.name}</div></div>
-        <div class="coupon-big"><div class="coupon-num">${c.discount}</div><div class="coupon-off">OFF</div></div>
-      </div>
-      <div class="coupon-desc">${c.desc}</div>
-      <hr class="coupon-hr">
-      <div class="coupon-meta">
-        <span><strong>유효기간</strong>${c.expiry}</span>
-        <span><strong>조건</strong>${c.note}</span>
-      </div>
-      ${c.link ? `<a href="${c.link}" target="_blank" rel="noopener noreferrer" class="coupon-link-btn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        공식 쿠폰 페이지 열기</a>` : ''}
-    </div>`).join('');
-  const infoHtml = s.info.map(i => `
-    <div class="info-item">
-      <span class="info-emoji">${i.icon}</span>
-      <div class="info-text"><strong>${i.title}</strong><span>${i.text}</span></div>
-    </div>`).join('');
-  document.getElementById('detail-body').innerHTML = `
-    <div class="detail-hero">
-      <div class="hero-bg"></div>
-      <div class="hero-logo">${heroIcon || `<span style="font-size:32px">🏬</span>`}</div>
-      <div class="hero-name">${s.name}</div>
-      <div class="hero-name-jp">${s.nameJp}</div>
-      <div class="hero-pills">
-        <span class="pill max">최대 ${s.maxDiscount}</span>
-        <span class="pill min">최소 ${s.minDiscount}</span>
-      </div>
-    </div>
-    <div class="detail-body">
-      <div class="section"><div class="section-label">쿠폰</div>${couponsHtml}</div>
-      <div class="section"><div class="section-label">이용 정보</div><div class="info-list">${infoHtml}</div></div>
-    </div>`;
-  const detail = document.getElementById('detail');
-  detail.classList.add('open');
-  detail.scrollTop = 0;
-  document.body.style.overflow = 'hidden';
+function setCat(cat){
+  currentCat=cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+  document.querySelectorAll('.sidebar-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+  renderList();
 }
 
-function closeDetail() {
-  document.getElementById('detail').classList.remove('open');
-  document.body.style.overflow = '';
-}
+document.querySelectorAll('.cat-btn,.sidebar-btn').forEach(b=>b.addEventListener('click',()=>setCat(b.dataset.cat)));
 
-document.getElementById('back-btn').addEventListener('click', closeDetail);
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeDetail(); });
+const searchEl=document.getElementById('search-input');
+if(searchEl) searchEl.addEventListener('input',e=>{ searchQ=e.target.value.trim(); renderList(); });
 
-// ── 카테고리 탭 ──
-document.querySelectorAll('.cat-btn').forEach(btn => btn.addEventListener('click', () => {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentCat = btn.dataset.cat;
-  renderList(currentCat);
-}));
-
-// ── 다크모드 토글 ──
+// 다크모드
 (function(){
-  const t = document.querySelector('[data-theme-toggle]');
-  const r = document.documentElement;
-  let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
-  r.setAttribute('data-theme', d);
-  const sunIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-  const moonIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-  if(t) { t.innerHTML = d==='dark'? sunIcon : moonIcon; t.addEventListener('click', ()=>{ d=d==='dark'?'light':'dark'; r.setAttribute('data-theme',d); t.innerHTML=d==='dark'?sunIcon:moonIcon; }); }
+  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  const sun='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  const moon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  if(t){t.innerHTML=d==='dark'?sun:moon;t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);t.innerHTML=d==='dark'?sun:moon;});}
 })();
 
-// ── 시작 ──
 loadData();
 </script>
 </body>
