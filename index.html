@@ -9,23 +9,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root,[data-theme="light"]{
-  --bg:#f7f6f2;--surface:#ffffff;--surface-offset:#f3f0ec;
+  --bg:#f7f6f2;--surface:#fff;--surface-offset:#f3f0ec;
   --border:#e8e5e0;
   --text:#28251d;--text-muted:#7a7974;--text-faint:#bab9b4;
   --red:#d32f2f;--red-hover:#b71c1c;--red-light:#fff5f5;
-  --green:#2e7d32;
-  --radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;
-  --shadow-sm:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:0 4px 16px rgba(0,0,0,.08);
-  --font:"Noto Sans KR",sans-serif;
-  --ease:cubic-bezier(.16,1,.3,1);
-  --content:960px;
+  --green:#2e7d32;--green-light:#f0fff4;
+  --blue:#1565c0;--blue-light:#e8f0fe;
+  --radius-sm:.375rem;--radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 4px 16px rgba(0,0,0,.08);
+  --font:"Noto Sans KR",sans-serif;--ease:cubic-bezier(.16,1,.3,1);--content:960px;
 }
 [data-theme="dark"]{
   --bg:#111110;--surface:#1c1b19;--surface-offset:#272624;
   --border:#333230;--text:#d4d3d0;--text-muted:#7a7977;--text-faint:#4a4947;
   --red:#ef9a9a;--red-hover:#e57373;--red-light:#2a1515;
-  --green:#a5d6a7;
+  --green:#a5d6a7;--green-light:#0d1f0e;
+  --blue:#90caf9;--blue-light:#0d1829;
   --shadow-sm:0 1px 3px rgba(0,0,0,.3);--shadow-md:0 4px 16px rgba(0,0,0,.4);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -34,6 +33,7 @@ body{font-family:var(--font);font-size:14px;color:var(--text);background:var(--b
 button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
 a{text-decoration:none;color:inherit}
 
+/* 헤더 */
 .header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm)}
 .header-inner{max-width:var(--content);margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
@@ -53,6 +53,7 @@ a{text-decoration:none;color:inherit}
 .mobile-search-btn{display:flex}
 @media(min-width:640px){.mobile-search-btn{display:none}}
 
+/* 카테고리 탭 */
 .cat-bar{background:var(--surface);border-bottom:1px solid var(--border)}
 .cat-bar-inner{max-width:var(--content);margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 12px}
 .cat-bar-inner::-webkit-scrollbar{display:none}
@@ -60,68 +61,98 @@ a{text-decoration:none;color:inherit}
 .cat-btn:hover{color:var(--text)}.cat-btn.active{color:var(--red);border-bottom-color:var(--red);font-weight:700}
 @media(min-width:640px){.cat-btn{padding:14px 16px;font-size:14px}}
 
-.main-wrap{max-width:var(--content);margin:0 auto;padding:20px 20px 32px}
-@media(min-width:960px){.main-wrap{display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start}}
+/* ── 필터 칩 바 ── */
+.filter-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 12px}
+.filter-bar-inner{max-width:var(--content);margin:0 auto;display:flex;align-items:center;gap:8px;padding:8px 0;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap}
+.filter-bar-inner::-webkit-scrollbar{display:none}
+.filter-divider{width:1px;height:20px;background:var(--border);flex-shrink:0}
+.filter-label{font-size:11px;font-weight:700;color:var(--text-faint);white-space:nowrap;flex-shrink:0}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;border:1.5px solid var(--border);color:var(--text-muted);background:var(--surface);white-space:nowrap;flex-shrink:0;transition:all 160ms var(--ease);cursor:pointer}
+.chip:hover{border-color:var(--text-muted);color:var(--text)}
+.chip.active-coupon{background:var(--green-light);border-color:var(--green);color:var(--green)}
+.chip.active-info{background:var(--blue-light);border-color:var(--blue);color:var(--blue)}
+.chip.active-region{background:var(--red-light);border-color:var(--red);color:var(--red)}
+.chip-reset{font-size:11px;color:var(--text-faint);padding:5px 8px;border:none;background:none;white-space:nowrap;flex-shrink:0}
+.chip-reset:hover{color:var(--red)}
 
+/* 레이아웃 */
+.main-wrap{max-width:var(--content);margin:0 auto;padding:20px 20px 32px}
+@media(min-width:960px){.main-wrap{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:start}}
+
+/* 사이드바 */
 .sidebar{display:none}
 @media(min-width:960px){
-  .sidebar{display:block;position:sticky;top:80px}
-  .sidebar-title{font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding:0 4px}
+  .sidebar{display:flex;flex-direction:column;gap:20px;position:sticky;top:130px}
+  .sidebar-section-title{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;padding:0 4px}
   .sidebar-list{display:flex;flex-direction:column;gap:2px}
-  .sidebar-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-lg);font-size:14px;font-weight:500;color:var(--text-muted);width:100%;text-align:left;transition:background 160ms,color 160ms}
+  .sidebar-btn{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-lg);font-size:13px;font-weight:500;color:var(--text-muted);width:100%;text-align:left;transition:background 160ms,color 160ms}
   .sidebar-btn:hover{background:var(--surface-offset);color:var(--text)}
   .sidebar-btn.active{background:var(--red-light);color:var(--red);font-weight:700}
-  .sidebar-btn .cat-icon{font-size:18px}
   .sidebar-count{margin-left:auto;font-size:11px;background:var(--surface-offset);padding:2px 7px;border-radius:var(--radius-full);color:var(--text-muted)}
   .sidebar-btn.active .sidebar-count{background:rgba(211,47,47,.12);color:var(--red)}
+  /* 사이드바 필터 칩 */
+  .sidebar-chips{display:flex;flex-direction:column;gap:6px}
+  .sidebar-chip{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--radius-lg);font-size:13px;font-weight:500;color:var(--text-muted);border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all 160ms}
+  .sidebar-chip:hover{border-color:var(--text-muted);color:var(--text)}
+  .sidebar-chip.active-coupon{background:var(--green-light);border-color:var(--green);color:var(--green);font-weight:700}
+  .sidebar-chip.active-info{background:var(--blue-light);border-color:var(--blue);color:var(--blue);font-weight:700}
+  .sidebar-chip.active-region{background:var(--red-light);border-color:var(--red);color:var(--red);font-weight:700}
 }
 
+/* 리스트 */
 .list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .list-title{font-size:15px;font-weight:700}
 .list-count{font-size:12px;color:var(--text-muted);background:var(--surface-offset);padding:3px 10px;border-radius:var(--radius-full)}
-
 .store-grid{display:grid;grid-template-columns:1fr;gap:10px}
 @media(min-width:540px) and (max-width:959px){.store-grid{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:960px){.store-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
 
-/* ── 카드 ── */
-.store-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:box-shadow 180ms var(--ease),transform 180ms var(--ease),border-color 180ms var(--ease);box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+/* 카드 */
+.store-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:14px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:box-shadow 180ms var(--ease),transform 180ms var(--ease),border-color 180ms var(--ease);box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
 .store-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--red)}
 .store-card:active{transform:translateY(0)}
-.badge{position:absolute;top:10px;left:0;font-size:10px;font-weight:700;padding:2px 8px 2px 10px;border-radius:0 var(--radius-full) var(--radius-full) 0;letter-spacing:.04em;text-transform:uppercase;color:#fff;z-index:1}
+.card-top{display:flex;align-items:center;gap:12px}
+.badge{position:absolute;top:10px;left:0;font-size:10px;font-weight:700;padding:2px 8px 2px 10px;border-radius:0 var(--radius-full) var(--radius-full) 0;color:#fff;z-index:1;letter-spacing:.04em;text-transform:uppercase}
 .badge.hot{background:var(--red)}.badge.new{background:var(--green)}
 .store-logo{width:52px;height:52px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
 .store-logo svg{width:52px;height:52px}
 .store-info{flex:1;min-width:0}
-.store-name{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
+.store-name{font-size:14px;font-weight:700;margin-bottom:2px;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
 .store-name-jp{font-size:11px;color:var(--text-muted);font-weight:400}
 .store-desc{font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .store-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
-.store-discount{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
 .discount-max{font-size:15px;font-weight:900;color:var(--red);white-space:nowrap}
 .discount-min{font-size:11px;color:var(--text-faint);white-space:nowrap}
-
-/* ── 찜 버튼 ── */
 .like-btn{width:30px;height:30px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;background:var(--surface-offset);transition:background 160ms,transform 160ms;flex-shrink:0;z-index:2}
-.like-btn:hover{background:var(--red-light)}
-.like-btn.liked{background:var(--red-light)}
-.like-btn svg{transition:fill 160ms,stroke 160ms}
+.like-btn:hover{background:var(--red-light)}.like-btn.liked{background:var(--red-light)}
 .like-btn.liked svg{fill:var(--red);stroke:var(--red)}
 .like-btn:active{transform:scale(.85)}
 
+/* 카드 하단 정보줄 */
+.card-bottom{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border)}
+.card-summary{font-size:12px;color:var(--text-muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-tags{display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:10px;font-weight:600;white-space:nowrap}
+.tag-coupon{background:var(--green-light);color:var(--green);border:1px solid rgba(46,125,50,.2)}
+.tag-info{background:var(--blue-light);color:var(--blue);border:1px solid rgba(21,101,192,.2)}
+.tag-region{background:var(--surface-offset);color:var(--text-muted);border:1px solid var(--border)}
+
+/* 빈 상태 */
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;color:var(--text-muted);text-align:center;gap:12px;grid-column:1/-1}
 .empty-icon{font-size:48px;opacity:.4}
 .empty h3{font-size:15px;font-weight:700;color:var(--text)}
 .empty p{font-size:13px;max-width:28ch;line-height:1.6}
+.empty-reset{margin-top:4px;padding:8px 18px;background:var(--red);color:#fff;border-radius:var(--radius-full);font-size:13px;font-weight:700;transition:background 160ms}
+.empty-reset:hover{background:var(--red-hover)}
 
-/* ── 하단 탭바 (홈 + 찜 2개만) ── */
+/* 하단 탭바 */
 .bottom-nav{background:var(--surface);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom,0);position:sticky;bottom:0}
 @media(min-width:960px){.bottom-nav{display:none}}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;color:var(--text-faint);transition:color 160ms;position:relative}
 .nav-item.active{color:var(--red)}
 .nav-item svg{width:22px;height:22px}
 .nav-label{font-size:10px;font-weight:500}
-.nav-badge{position:absolute;top:7px;right:calc(50% - 18px);background:var(--red);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;padding:0 4px;display:none}
+.nav-badge{position:absolute;top:7px;right:calc(50% - 18px);background:var(--red);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:var(--radius-full);display:none;align-items:center;justify-content:center;padding:0 4px}
 .nav-badge.show{display:flex}
 </style>
 </head>
@@ -152,6 +183,7 @@ a{text-decoration:none;color:inherit}
       </button>
     </div>
   </div>
+  <!-- 카테고리 탭 -->
   <nav class="cat-bar" role="tablist">
     <div class="cat-bar-inner">
       <button class="cat-btn active" data-cat="all" role="tab"><span>🗾</span>전체</button>
@@ -161,31 +193,67 @@ a{text-decoration:none;color:inherit}
       <button class="cat-btn" data-cat="outlet" role="tab"><span>🛍️</span>아울렛</button>
     </div>
   </nav>
+  <!-- 필터 칩 (모바일/태블릿) -->
+  <div class="filter-bar" id="mobile-filter-bar">
+    <div class="filter-bar-inner">
+      <span class="filter-label">혜택</span>
+      <button class="chip" data-filter-type="coupon">🎟️ 할인쿠폰</button>
+      <button class="chip" data-filter-type="info">ℹ️ 할인정보</button>
+      <div class="filter-divider"></div>
+      <span class="filter-label">지역</span>
+      <button class="chip" data-filter-region="tokyo">🗼 도쿄</button>
+      <button class="chip" data-filter-region="osaka">🏯 오사카</button>
+      <button class="chip" data-filter-region="kyoto">⛩️ 교토</button>
+      <button class="chip" data-filter-region="fukuoka">🌸 후쿠오카</button>
+      <button class="chip" data-filter-region="nationwide">🗾 전국</button>
+      <button class="chip-reset" id="filter-reset">초기화</button>
+    </div>
+  </div>
 </header>
 
 <div class="main-wrap">
+  <!-- 사이드바 (데스크탑) -->
   <aside class="sidebar">
-    <div class="sidebar-title">카테고리</div>
-    <div class="sidebar-list">
-      <button class="sidebar-btn active" data-cat="all"><span class="cat-icon">🗾</span>전체<span class="sidebar-count" id="cnt-all">0</span></button>
-      <button class="sidebar-btn" data-cat="drugstore"><span class="cat-icon">💊</span>드럭스토어<span class="sidebar-count" id="cnt-drugstore">0</span></button>
-      <button class="sidebar-btn" data-cat="department"><span class="cat-icon">🏬</span>백화점<span class="sidebar-count" id="cnt-department">0</span></button>
-      <button class="sidebar-btn" data-cat="convenience"><span class="cat-icon">🏪</span>편의점<span class="sidebar-count" id="cnt-convenience">0</span></button>
-      <button class="sidebar-btn" data-cat="outlet"><span class="cat-icon">🛍️</span>아울렛<span class="sidebar-count" id="cnt-outlet">0</span></button>
+    <div>
+      <div class="sidebar-section-title">카테고리</div>
+      <div class="sidebar-list">
+        <button class="sidebar-btn active" data-cat="all"><span>🗾</span>전체<span class="sidebar-count" id="cnt-all">0</span></button>
+        <button class="sidebar-btn" data-cat="drugstore"><span>💊</span>드럭스토어<span class="sidebar-count" id="cnt-drugstore">0</span></button>
+        <button class="sidebar-btn" data-cat="department"><span>🏬</span>백화점<span class="sidebar-count" id="cnt-department">0</span></button>
+        <button class="sidebar-btn" data-cat="convenience"><span>🏪</span>편의점<span class="sidebar-count" id="cnt-convenience">0</span></button>
+        <button class="sidebar-btn" data-cat="outlet"><span>🛍️</span>아울렛<span class="sidebar-count" id="cnt-outlet">0</span></button>
+      </div>
+    </div>
+    <div>
+      <div class="sidebar-section-title">혜택 유형</div>
+      <div class="sidebar-chips">
+        <button class="sidebar-chip" data-filter-type="coupon">🎟️ 할인쿠폰</button>
+        <button class="sidebar-chip" data-filter-type="info">ℹ️ 할인정보</button>
+      </div>
+    </div>
+    <div>
+      <div class="sidebar-section-title">여행 지역</div>
+      <div class="sidebar-chips">
+        <button class="sidebar-chip" data-filter-region="tokyo">🗼 도쿄</button>
+        <button class="sidebar-chip" data-filter-region="osaka">🏯 오사카</button>
+        <button class="sidebar-chip" data-filter-region="kyoto">⛩️ 교토</button>
+        <button class="sidebar-chip" data-filter-region="fukuoka">🌸 후쿠오카</button>
+        <button class="sidebar-chip" data-filter-region="nationwide">🗾 전국</button>
+      </div>
     </div>
   </aside>
+
   <main>
     <div class="list-header">
       <span class="list-title" id="list-title">전체 쿠폰</span>
       <span class="list-count" id="list-count">로딩중...</span>
     </div>
     <div class="store-grid" id="store-grid">
-      <div class="empty"><div class="empty-icon">⏳</div><h3>불러오는 중</h3><p>쿠폰 정보를 가져오고 있습니다.</p></div>
+      <div class="empty"><div class="empty-icon">⏳</div><h3>불러오는 중</h3></div>
     </div>
   </main>
 </div>
 
-<!-- 하단 탭바: 홈 + 찜목록만 -->
 <nav class="bottom-nav">
   <button class="nav-item active" id="nav-home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
@@ -199,53 +267,31 @@ a{text-decoration:none;color:inherit}
 </nav>
 
 <script>
-const ICONS={donki:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#FFD700"/><text x="26" y="22" text-anchor="middle" font-size="14" font-weight="900" fill="#e60012" font-family="sans-serif">ドン</text><text x="26" y="38" text-anchor="middle" font-size="11" font-weight="700" fill="#e60012" font-family="sans-serif">キホーテ</text></svg>`,matsukiyo:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#00843d"/><text x="26" y="24" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="sans-serif">マツ</text><text x="26" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="sans-serif">キヨシ</text></svg>`,isetan:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#1a237e"/><text x="26" y="34" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="serif">伊勢丹</text></svg>`,takashimaya:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#8b0000"/><text x="26" y="34" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="serif">高島屋</text></svg>`,cosmos:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#d81b60"/><text x="26" y="24" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">コスモス</text><text x="26" y="40" text-anchor="middle" font-size="10" font-weight="500" fill="rgba(255,255,255,.8)" font-family="sans-serif">COSMOS</text></svg>`,mitsui:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#e65100"/><text x="26" y="23" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="sans-serif">三井</text><text x="26" y="37" text-anchor="middle" font-size="9" font-weight="700" fill="rgba(255,255,255,.9)" font-family="sans-serif">OUTLET</text></svg>`,seven:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#1b5e20"/><rect x="0" y="18" width="52" height="17" fill="#c62828"/><text x="26" y="32" text-anchor="middle" font-size="20" font-weight="900" fill="#fff" font-family="sans-serif">7</text></svg>`,welcia:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#0d47a1"/><text x="26" y="24" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">ウエル</text><text x="26" y="40" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">シア</text></svg>`};
-
+const ICONS={donki:`<svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" fill="#FFD700"/><text x="26" y="22" text-anchor="middle" font-size="14" font-weight="900" fill="#e60012" font-family="sans-serif">ドン</text><text x="26" y="38" text-anchor="middle" font-size="11" font-weight="700" fill="#e60012" font-family="sans-serif">キホーテ</text></svg>`,matsukiyo:`<svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" fill="#00843d"/><text x="26" y="24" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="sans-serif">マツ</text><text x="26" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="sans-serif">キヨシ</text></svg>`,isetan:`<svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" fill="#1a237e"/><text x="26" y="34" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="serif">伊勢丹</text></svg>`,takashimaya:`<svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" fill="#8b0000"/><text x="26" y="34" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="serif">高島屋</text></svg>`,cosmos:`<svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" fill="#d81b60"/><text x="26" y="24" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">コスモス</text><text x="26" y="40" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.8)" font-family="sans-serif">COSMOS</text></svg>`,mitsui:`<svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" fill="#e65100"/><text x="26" y="23" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="sans-serif">三井</text><text x="26" y="37" text-anchor="middle" font-size="9" fill="rgba(255,255,255,.9)" font-family="sans-serif">OUTLET</text></svg>`,seven:`<svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" fill="#1b5e20"/><rect x="0" y="18" width="52" height="17" fill="#c62828"/><text x="26" y="32" text-anchor="middle" font-size="20" font-weight="900" fill="#fff" font-family="sans-serif">7</text></svg>`,welcia:`<svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" fill="#0d47a1"/><text x="26" y="24" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">ウエル</text><text x="26" y="40" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">シア</text></svg>`};
+const REGION_LABELS={tokyo:'🗼도쿄',osaka:'🏯오사카',kyoto:'⛩️교토',fukuoka:'🌸후쿠오카',nationwide:'🗾전국'};
 const CAT_LABELS={all:'전체 쿠폰',drugstore:'드럭스토어',department:'백화점',convenience:'편의점',outlet:'아울렛'};
 const CATS=['all','drugstore','department','convenience','outlet'];
-let stores=[],currentCat='all',searchQ='';
 
-// ── LocalStorage 찜 관리 ──
+let stores=[],currentCat='all',searchQ='',filterType=null,filterRegion=null;
+
+// 찜
 function getLikes(){try{return JSON.parse(localStorage.getItem('jp_likes')||'[]');}catch{return[];}}
-function setLikes(arr){localStorage.setItem('jp_likes',JSON.stringify(arr));}
+function setLikes(a){localStorage.setItem('jp_likes',JSON.stringify(a));}
 function isLiked(id){return getLikes().includes(id);}
-function toggleLike(id,e){
-  e.stopPropagation();
-  const likes=getLikes();
-  const idx=likes.indexOf(id);
-  if(idx>-1) likes.splice(idx,1); else likes.push(id);
-  setLikes(likes);
-  updateLikeUI(id);
-  updateLikeBadge();
-}
-function updateLikeUI(id){
-  const btn=document.querySelector(`.like-btn[data-id="${id}"]`);
-  if(!btn) return;
-  btn.classList.toggle('liked',isLiked(id));
-  btn.setAttribute('aria-label',isLiked(id)?'찜 해제':'찜하기');
-}
-function updateLikeBadge(){
-  const cnt=getLikes().length;
-  const badge=document.getElementById('like-badge');
-  if(!badge) return;
-  badge.textContent=cnt>0?cnt:'';
-  badge.classList.toggle('show',cnt>0);
-}
+function toggleLike(id,e){e.stopPropagation();const l=getLikes();const i=l.indexOf(id);if(i>-1)l.splice(i,1);else l.push(id);setLikes(l);renderList();updateLikeBadge();}
+function updateLikeBadge(){const c=getLikes().length;const b=document.getElementById('like-badge');if(!b)return;b.textContent=c>0?c:'';b.classList.toggle('show',c>0);}
 
 async function loadData(){
-  try{const r=await fetch('./coupons.json');stores=await r.json();}
-  catch(e){stores=[];}
+  try{const r=await fetch('./coupons.json');stores=await r.json();}catch{stores=[];}
   updateCounts();renderList();updateLikeBadge();
 }
 function updateCounts(){
-  CATS.forEach(c=>{
-    const cnt=c==='all'?stores.length:stores.filter(s=>s.cat===c).length;
-    const el=document.getElementById('cnt-'+c);
-    if(el) el.textContent=cnt;
-  });
+  CATS.forEach(c=>{const el=document.getElementById('cnt-'+c);if(el)el.textContent=(c==='all'?stores:stores.filter(s=>s.cat===c)).length;});
 }
 function getFiltered(){
-  let list=currentCat==='all'?stores:stores.filter(s=>s.cat===currentCat);
+  let list=currentCat==='all'?[...stores]:stores.filter(s=>s.cat===currentCat);
+  if(filterType) list=list.filter(s=>s.couponType===filterType);
+  if(filterRegion) list=list.filter(s=>s.regions&&(s.regions.includes(filterRegion)||s.regions.includes('nationwide')));
   if(searchQ) list=list.filter(s=>s.name.includes(searchQ)||s.nameJp.includes(searchQ)||s.desc.includes(searchQ));
   return list;
 }
@@ -255,44 +301,73 @@ function renderList(){
   document.getElementById('list-count').textContent=filtered.length+'개';
   const el=document.getElementById('store-grid');
   if(!filtered.length){
-    el.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><h3>쿠폰이 없습니다</h3><p>해당 카테고리의 쿠폰이 없습니다.</p></div>`;
+    const hasFilter=filterType||filterRegion||searchQ;
+    el.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><h3>조건에 맞는 쿠폰이 없어요</h3><p>필터 조건을 변경해보세요</p>${hasFilter?`<button class="empty-reset" onclick="resetFilters()">필터 초기화</button>`:''}</div>`;
     return;
   }
-  el.innerHTML=filtered.map(s=>`
-    <article class="store-card" data-id="${s.id}" tabindex="0" role="button" aria-label="${s.name} 상세보기">
+  el.innerHTML=filtered.map(s=>{
+    const regionTags=(s.regions||[]).filter(r=>r!=='nationwide').slice(0,2).map(r=>`<span class="tag tag-region">${REGION_LABELS[r]||r}</span>`).join('');
+    const allNation=s.regions&&s.regions.includes('nationwide')&&s.regions.length===1?`<span class="tag tag-region">${REGION_LABELS['nationwide']}</span>`:'';
+    const typeTag=s.couponType==='coupon'?`<span class="tag tag-coupon">🎟️ 할인쿠폰</span>`:`<span class="tag tag-info">ℹ️ 할인정보</span>`;
+    return `<article class="store-card" data-id="${s.id}" tabindex="0" role="button" aria-label="${s.name} 상세보기">
       ${s.badge?`<span class="badge ${s.badgeType}">${s.badge}</span>`:''}
-      <div class="store-logo">${ICONS[s.iconKey]||'<span style="font-size:24px">🏬</span>'}</div>
-      <div class="store-info">
-        <div class="store-name">${s.name}<span class="store-name-jp">${s.nameJp}</span></div>
-        <div class="store-desc">${s.desc}</div>
-      </div>
-      <div class="store-right">
-        <button class="like-btn${isLiked(s.id)?' liked':''}" data-id="${s.id}" aria-label="${isLiked(s.id)?'찜 해제':'찜하기'}">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="${isLiked(s.id)?'var(--red)':'none'}" stroke="${isLiked(s.id)?'var(--red)':'currentColor'}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </button>
-        <div class="store-discount">
+      <div class="card-top">
+        <div class="store-logo">${ICONS[s.iconKey]||'<span style="font-size:24px">🏬</span>'}</div>
+        <div class="store-info">
+          <div class="store-name">${s.name}<span class="store-name-jp">${s.nameJp}</span></div>
+          <div class="store-desc">${s.desc}</div>
+        </div>
+        <div class="store-right">
+          <button class="like-btn${isLiked(s.id)?' liked':''}" data-id="${s.id}" aria-label="${isLiked(s.id)?'찜 해제':'찜하기'}">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="${isLiked(s.id)?'var(--red)':'none'}" stroke="${isLiked(s.id)?'var(--red)':'currentColor'}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
           <div class="discount-max">${s.maxDiscount}</div>
           <div class="discount-min">최소 ${s.minDiscount}</div>
         </div>
       </div>
-    </article>`).join('');
+      <div class="card-bottom">
+        <span class="card-summary">${s.summary||''}</span>
+        <div class="card-tags">${typeTag}${regionTags||allNation}</div>
+      </div>
+    </article>`;
+  }).join('');
   el.querySelectorAll('.store-card').forEach(c=>{
     c.addEventListener('click',()=>{location.href=`./detail.html?id=${c.dataset.id}`;});
     c.addEventListener('keydown',e=>{if(e.key==='Enter')location.href=`./detail.html?id=${c.dataset.id}`;});
   });
-  el.querySelectorAll('.like-btn').forEach(btn=>{
-    btn.addEventListener('click',e=>toggleLike(+btn.dataset.id,e));
-  });
+  el.querySelectorAll('.like-btn').forEach(b=>b.addEventListener('click',e=>toggleLike(+b.dataset.id,e)));
 }
+
+// 카테고리
 function setCat(cat){
   currentCat=cat;
-  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
-  document.querySelectorAll('.sidebar-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+  document.querySelectorAll('.cat-btn,.sidebar-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
   renderList();
 }
 document.querySelectorAll('.cat-btn,.sidebar-btn').forEach(b=>b.addEventListener('click',()=>setCat(b.dataset.cat)));
+
+// 혜택 유형 필터
+function setTypeFilter(type){
+  filterType=filterType===type?null:type;
+  syncFilterUI();renderList();
+}
+// 지역 필터
+function setRegionFilter(region){
+  filterRegion=filterRegion===region?null:region;
+  syncFilterUI();renderList();
+}
+function resetFilters(){filterType=null;filterRegion=null;searchQ='';const si=document.getElementById('search-input');if(si)si.value='';syncFilterUI();renderList();}
+function syncFilterUI(){
+  document.querySelectorAll('[data-filter-type]').forEach(b=>{b.className=b.classList.contains('sidebar-chip')?'sidebar-chip':'chip';if(filterType===b.dataset.filterType)b.classList.add(filterType==='coupon'?'active-coupon':'active-info');});
+  document.querySelectorAll('[data-filter-region]').forEach(b=>{b.className=b.classList.contains('sidebar-chip')?'sidebar-chip':'chip';if(filterRegion===b.dataset.filterRegion)b.classList.add('active-region');});
+}
+document.querySelectorAll('[data-filter-type]').forEach(b=>b.addEventListener('click',()=>setTypeFilter(b.dataset.filterType)));
+document.querySelectorAll('[data-filter-region]').forEach(b=>b.addEventListener('click',()=>setRegionFilter(b.dataset.filterRegion)));
+document.getElementById('filter-reset').addEventListener('click',resetFilters);
+
 const si=document.getElementById('search-input');
-if(si) si.addEventListener('input',e=>{searchQ=e.target.value.trim();renderList();});
+if(si)si.addEventListener('input',e=>{searchQ=e.target.value.trim();renderList();});
+
 (function(){const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';r.setAttribute('data-theme',d);const sun='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';const moon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';if(t){t.innerHTML=d==='dark'?sun:moon;t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);t.innerHTML=d==='dark'?sun:moon;});}})();
 loadData();
 </script>
