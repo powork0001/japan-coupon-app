@@ -5,7 +5,16 @@
     "iconKey": "donki",
     "name": "돈키호테",
     "nameJp": "ドン・キホーテ",
+    "summary": "식품·잡화·화장품·전자제품 등 다양한 품목 취급",
     "desc": "외국인 전용 할인 쿠폰 · 면세 가능",
+    "couponType": "coupon",
+    "regions": [
+      "tokyo",
+      "osaka",
+      "kyoto",
+      "fukuoka",
+      "nationwide"
+    ],
     "maxDiscount": "10%",
     "minDiscount": "5%",
     "badge": "HOT",
@@ -14,7 +23,7 @@
       {
         "type": "외국인 할인",
         "discount": "10%",
-        "desc": "¥3,000 이상 구매 시 10% 할인 (면세 제외 품목 적용)",
+        "desc": "¥3,000 이상 구매 시 10% 할인",
         "expiry": "2025.12.31",
         "note": "여권 제시 필수",
         "link": "https://japanportal.donki-global.com/coupon/cp001_en.html"
@@ -44,7 +53,14 @@
     "iconKey": "matsukiyo",
     "name": "마츠모토 키요시",
     "nameJp": "マツモトキヨシ",
+    "summary": "화장품·의약품·스킨케어 전문 드럭스토어",
     "desc": "드럭스토어 No.1 · 코스메 전문",
+    "couponType": "coupon",
+    "regions": [
+      "tokyo",
+      "osaka",
+      "nationwide"
+    ],
     "maxDiscount": "8%",
     "minDiscount": "3%",
     "badge": "NEW",
@@ -83,7 +99,12 @@
     "iconKey": "isetan",
     "name": "이세탄 백화점",
     "nameJp": "伊勢丹",
+    "summary": "명품·패션·식품관 등 프리미엄 쇼핑 백화점",
     "desc": "신주쿠 명품 쇼핑 · 외국인 우대 서비스",
+    "couponType": "info",
+    "regions": [
+      "tokyo"
+    ],
     "maxDiscount": "5%",
     "minDiscount": "2%",
     "badge": "",
@@ -122,7 +143,14 @@
     "iconKey": "takashimaya",
     "name": "다카시마야 백화점",
     "nameJp": "高島屋",
+    "summary": "패션·식품·리빙 전반을 아우르는 종합 백화점",
     "desc": "긴자·신주쿠 플래그십 · 면세 혜택",
+    "couponType": "info",
+    "regions": [
+      "tokyo",
+      "osaka",
+      "kyoto"
+    ],
     "maxDiscount": "5%",
     "minDiscount": "2%",
     "badge": "",
@@ -161,7 +189,12 @@
     "iconKey": "cosmos",
     "name": "코스모스",
     "nameJp": "コスモス",
+    "summary": "생활용품·의약품·식품을 상시 최저가로 판매",
     "desc": "규슈·주코쿠 지역 최저가 드럭스토어",
+    "couponType": "info",
+    "regions": [
+      "fukuoka"
+    ],
     "maxDiscount": "상시저가",
     "minDiscount": "쿠폰없음",
     "badge": "",
@@ -195,7 +228,14 @@
     "iconKey": "mitsui",
     "name": "미쓰이 아울렛 파크",
     "nameJp": "三井アウトレットパーク",
+    "summary": "국내외 유명 브랜드를 상시 30~70% 할인 판매",
     "desc": "국내외 브랜드 최대 70% 할인",
+    "couponType": "info",
+    "regions": [
+      "tokyo",
+      "osaka",
+      "nationwide"
+    ],
     "maxDiscount": "70%",
     "minDiscount": "30%",
     "badge": "HOT",
@@ -229,7 +269,12 @@
     "iconKey": "seven",
     "name": "세븐일레븐",
     "nameJp": "セブン-イレブン",
+    "summary": "도시락·디저트·일용품 등 생활 전반 편의점",
     "desc": "7PAY · 방문 기념 쿠폰 제공",
+    "couponType": "coupon",
+    "regions": [
+      "nationwide"
+    ],
     "maxDiscount": "10%",
     "minDiscount": "무료증정",
     "badge": "",
@@ -263,7 +308,12 @@
     "iconKey": "welcia",
     "name": "웰시아",
     "nameJp": "ウエルシア",
+    "summary": "의약품·화장품·식품 취급, 와온포인트 적립 가능",
     "desc": "외국인 인기 드럭스토어 · 와온포인트 적립",
+    "couponType": "info",
+    "regions": [
+      "tokyo"
+    ],
     "maxDiscount": "3%",
     "minDiscount": "1%",
     "badge": "",
