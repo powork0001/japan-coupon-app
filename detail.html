@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>쿠폰 상세 - 일본 여행 쿠폰</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#f7f6f2;--surface:#ffffff;--surface-2:#f9f8f5;--surface-offset:#f3f0ec;
+  --border:#e8e5e0;--text:#28251d;--text-muted:#7a7974;--text-faint:#bab9b4;
+  --red:#d32f2f;--red-hover:#b71c1c;--red-light:#fff5f5;
+  --green:#2e7d32;
+  --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08);
+  --font:"Noto Sans KR",sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --content:720px;
+}
+[data-theme="dark"]{
+  --bg:#111110;--surface:#1c1b19;--surface-2:#222120;--surface-offset:#272624;
+  --border:#333230;--text:#d4d3d0;--text-muted:#7a7977;--text-faint:#4a4947;
+  --red:#ef9a9a;--red-hover:#e57373;--red-light:#2a1515;
+  --green:#a5d6a7;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.3);--shadow-md:0 4px 16px rgba(0,0,0,.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);font-size:14px;color:var(--text);background:var(--bg);min-height:100dvh}
+button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+a{text-decoration:none;color:inherit}
+
+/* ── 헤더 ── */
+.header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.header-inner{max-width:var(--content);margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:10px}
+.back-btn{width:36px;height:36px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;color:var(--text);flex-shrink:0;transition:background 160ms}
+.back-btn:hover{background:var(--surface-offset)}
+.header-title{font-size:16px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.icon-btn{width:36px;height:36px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;color:var(--text-muted);flex-shrink:0;transition:background 160ms,color 160ms}
+.icon-btn:hover{background:var(--surface-offset);color:var(--text)}
+
+/* ── 히어로 ── */
+.hero{position:relative;overflow:hidden;padding:40px 20px 36px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#c62828 0%,#e53935 50%,#ef5350 100%)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(255,255,255,.1) 0%,transparent 60%)}
+.hero-logo{width:88px;height:88px;border-radius:20px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);box-shadow:0 8px 24px rgba(0,0,0,.2);overflow:hidden;position:relative;flex-shrink:0}
+.hero-logo svg{width:88px;height:88px}
+.hero-name{font-size:24px;font-weight:900;color:#fff;text-align:center;position:relative}
+.hero-name-jp{font-size:13px;color:rgba(255,255,255,.75);position:relative}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;position:relative}
+.pill{padding:5px 14px;border-radius:var(--radius-full);font-size:12px;font-weight:700}
+.pill.max{background:rgba(255,255,255,.95);color:var(--red)}
+.pill.min{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3)}
+
+/* ── 컨텐츠 ── */
+.page-body{max-width:var(--content);margin:0 auto;padding:24px 20px 60px}
+
+/* 탭 (쿠폰/정보) */
+.tab-bar{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px}
+.tab-btn{flex:1;padding:12px;font-size:14px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;transition:color 160ms,border-color 160ms;text-align:center}
+.tab-btn.active{color:var(--red);border-bottom-color:var(--red);font-weight:700}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* 쿠폰 카드 */
+.coupon-card{background:var(--surface);border:1.5px dashed var(--border);border-radius:var(--radius-xl);padding:20px;position:relative;overflow:hidden;margin-bottom:14px}
+.coupon-card::before,.coupon-card::after{content:'';position:absolute;width:24px;height:24px;border-radius:50%;background:var(--bg);top:50%;transform:translateY(-50%)}
+.coupon-card::before{left:-12px}.coupon-card::after{right:-12px}
+.coupon-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.coupon-meta-left .coupon-type{font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.coupon-meta-left .coupon-store{font-size:12px;color:var(--text-muted)}
+.coupon-big{text-align:right}
+.coupon-num{font-size:40px;font-weight:900;color:var(--red);line-height:1}
+.coupon-off{font-size:13px;font-weight:700;color:var(--red)}
+.coupon-desc{font-size:13px;color:var(--text-muted);line-height:1.7;padding:14px;background:var(--surface-offset);border-radius:var(--radius-lg);margin-bottom:14px}
+.coupon-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px dashed var(--border)}
+.coupon-row-label{font-size:11px;font-weight:700;color:var(--text-muted)}
+.coupon-row-val{font-size:12px;color:var(--text)}
+
+.coupon-link-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;background:var(--red);color:#fff;border-radius:var(--radius-lg);font-size:14px;font-weight:700;margin-top:16px;transition:background 160ms,transform 160ms;box-shadow:0 4px 16px rgba(211,47,47,.3)}
+.coupon-link-btn:hover{background:var(--red-hover);transform:translateY(-1px)}
+.coupon-link-btn:active{transform:translateY(0)}
+
+/* 정보 리스트 */
+.info-list{display:flex;flex-direction:column;gap:10px}
+.info-item{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px}
+.info-emoji{font-size:20px;flex-shrink:0;margin-top:1px}
+.info-text strong{display:block;font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.info-text span{font-size:13px;color:var(--text-muted);line-height:1.6}
+
+/* 데스크탑 2컬럼 */
+@media(min-width:640px){
+  .hero{padding:56px 40px 48px}
+  .hero-name{font-size:28px}
+  .page-body{padding:32px 40px 80px}
+}
+
+/* 로딩/에러 */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;gap:16px;color:var(--text-muted);text-align:center}
+.loading-icon{font-size:48px;animation:spin 1.5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="./index.html" class="back-btn" aria-label="목록으로 돌아가기">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    </a>
+    <span class="header-title" id="header-title">쿠폰 상세</span>
+    <button class="icon-btn" id="share-btn" aria-label="공유">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    </button>
+    <button class="icon-btn" data-theme-toggle aria-label="다크모드 전환">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div id="page-content">
+  <div class="loading"><div class="loading-icon">⏳</div><p>불러오는 중...</p></div>
+</div>
+
+<script>
+const ICONS = {
+  donki:`<svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="88" fill="#FFD700"/><text x="44" y="38" text-anchor="middle" font-size="24" font-weight="900" fill="#e60012" font-family="sans-serif">ドン</text><text x="44" y="63" text-anchor="middle" font-size="18" font-weight="700" fill="#e60012" font-family="sans-serif">キホーテ</text></svg>`,
+  matsukiyo:`<svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="88" fill="#00843d"/><text x="44" y="40" text-anchor="middle" font-size="24" font-weight="900" fill="#fff" font-family="sans-serif">マツ</text><text x="44" y="67" text-anchor="middle" font-size="18" font-weight="700" fill="#fff" font-family="sans-serif">キヨシ</text></svg>`,
+  isetan:`<svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="88" fill="#1a237e"/><text x="44" y="57" text-anchor="middle" font-size="26" font-weight="900" fill="#fff" font-family="serif">伊勢丹</text></svg>`,
+  takashimaya:`<svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="88" fill="#8b0000"/><text x="44" y="57" text-anchor="middle" font-size="26" font-weight="900" fill="#fff" font-family="serif">高島屋</text></svg>`,
+  cosmos:`<svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="88" fill="#d81b60"/><text x="44" y="40" text-anchor="middle" font-size="20" font-weight="900" fill="#fff" font-family="sans-serif">コスモス</text><text x="44" y="64" text-anchor="middle" font-size="15" font-weight="500" fill="rgba(255,255,255,.8)" font-family="sans-serif">COSMOS</text></svg>`,
+  mitsui:`<svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="88" fill="#e65100"/><text x="44" y="40" text-anchor="middle" font-size="24" font-weight="900" fill="#fff" font-family="sans-serif">三井</text><text x="44" y="62" text-anchor="middle" font-size="14" font-weight="700" fill="rgba(255,255,255,.9)" font-family="sans-serif">OUTLET</text></svg>`,
+  seven:`<svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="88" fill="#1b5e20"/><rect x="0" y="30" width="88" height="30" fill="#c62828"/><text x="44" y="53" text-anchor="middle" font-size="32" font-weight="900" fill="#fff" font-family="sans-serif">7</text></svg>`,
+  welcia:`<svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="88" fill="#0d47a1"/><text x="44" y="40" text-anchor="middle" font-size="20" font-weight="900" fill="#fff" font-family="sans-serif">ウエル</text><text x="44" y="64" text-anchor="middle" font-size="20" font-weight="900" fill="#fff" font-family="sans-serif">シア</text></svg>`,
+};
+
+// URL에서 id 파싱
+const params = new URLSearchParams(location.search);
+const storeId = parseInt(params.get('id'));
+
+async function loadAndRender() {
+  try {
+    const res = await fetch('./coupons.json');
+    const stores = await res.json();
+    const s = stores.find(x => x.id === storeId);
+    if (!s) { showError(); return; }
+    render(s);
+  } catch(e) { showError(); }
+}
+
+function showError() {
+  document.getElementById('page-content').innerHTML = `
+    <div class="loading"><div style="font-size:48px">😵</div><p>매장 정보를 불러올 수 없습니다.</p><a href="./index.html" style="color:var(--red);font-weight:700;margin-top:8px">← 목록으로 돌아가기</a></div>`;
+}
+
+function render(s) {
+  document.title = s.name + ' 쿠폰 - 일본 여행 쿠폰';
+  document.getElementById('header-title').textContent = s.name;
+
+  const couponsHtml = s.coupons.map(c => `
+    <div class="coupon-card">
+      <div class="coupon-top">
+        <div class="coupon-meta-left">
+          <div class="coupon-type">${c.type}</div>
+          <div class="coupon-store">${s.name}</div>
+        </div>
+        <div class="coupon-big">
+          <div class="coupon-num">${c.discount}</div>
+          <div class="coupon-off">OFF</div>
+        </div>
+      </div>
+      <div class="coupon-desc">${c.desc}</div>
+      <div class="coupon-row"><span class="coupon-row-label">📅 유효기간</span><span class="coupon-row-val">${c.expiry}</span></div>
+      <div class="coupon-row"><span class="coupon-row-label">✅ 이용조건</span><span class="coupon-row-val">${c.note}</span></div>
+      ${c.link ? `<a href="${c.link}" target="_blank" rel="noopener noreferrer" class="coupon-link-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        공식 쿠폰 페이지 열기</a>` : ''}
+    </div>`).join('');
+
+  const infoHtml = s.info.map(i => `
+    <div class="info-item">
+      <span class="info-emoji">${i.icon}</span>
+      <div class="info-text"><strong>${i.title}</strong><span>${i.text}</span></div>
+    </div>`).join('');
+
+  document.getElementById('page-content').innerHTML = `
+    <div class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-logo">${ICONS[s.iconKey] || '<span style="font-size:40px">🏬</span>'}</div>
+      <div class="hero-name">${s.name}</div>
+      <div class="hero-name-jp">${s.nameJp}</div>
+      <div class="hero-pills">
+        <span class="pill max">최대 ${s.maxDiscount}</span>
+        <span class="pill min">최소 ${s.minDiscount}</span>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="coupon">🎟️ 쿠폰 (${s.coupons.length})</button>
+        <button class="tab-btn" data-tab="info">ℹ️ 이용 정보</button>
+      </div>
+      <div class="tab-panel active" id="tab-coupon">${couponsHtml}</div>
+      <div class="tab-panel" id="tab-info"><div class="info-list">${infoHtml}</div></div>
+    </div>`;
+
+  // 탭 전환
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  }));
+
+  // 공유 버튼
+  document.getElementById('share-btn').addEventListener('click', async () => {
+    if(navigator.share){
+      try{ await navigator.share({title:s.name+' 쿠폰', url:location.href}); } catch(e){}
+    } else {
+      navigator.clipboard.writeText(location.href).then(()=>alert('링크가 복사되었습니다!'));
+    }
+  });
+}
+
+// 다크모드
+(function(){
+  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  const sun='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  const moon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  if(t){t.innerHTML=d==='dark'?sun:moon;t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);t.innerHTML=d==='dark'?sun:moon;});}
+})();
+
+loadAndRender();
+</script>
+</body>
+</html>
