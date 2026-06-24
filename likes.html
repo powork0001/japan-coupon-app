@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>찜목록 - 일본 여행 쿠폰</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#f7f6f2;--surface:#ffffff;--surface-offset:#f3f0ec;
+  --border:#e8e5e0;
+  --text:#28251d;--text-muted:#7a7974;--text-faint:#bab9b4;
+  --red:#d32f2f;--red-hover:#b71c1c;--red-light:#fff5f5;
+  --green:#2e7d32;
+  --radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 4px 16px rgba(0,0,0,.08);
+  --font:"Noto Sans KR",sans-serif;--ease:cubic-bezier(.16,1,.3,1);--content:720px;
+}
+[data-theme="dark"]{
+  --bg:#111110;--surface:#1c1b19;--surface-offset:#272624;
+  --border:#333230;--text:#d4d3d0;--text-muted:#7a7977;--text-faint:#4a4947;
+  --red:#ef9a9a;--red-hover:#e57373;--red-light:#2a1515;--green:#a5d6a7;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.3);--shadow-md:0 4px 16px rgba(0,0,0,.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);font-size:14px;color:var(--text);background:var(--bg);min-height:100dvh}
+button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+a{text-decoration:none;color:inherit}
+
+.header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.header-inner{max-width:var(--content);margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:10px}
+.back-btn{width:36px;height:36px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;color:var(--text);flex-shrink:0;transition:background 160ms}
+.back-btn:hover{background:var(--surface-offset)}
+.header-title{font-size:16px;font-weight:700;flex:1}
+.icon-btn{width:36px;height:36px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;color:var(--text-muted);flex-shrink:0;transition:background 160ms,color 160ms}
+.icon-btn:hover{background:var(--surface-offset);color:var(--text)}
+
+.page-wrap{max-width:var(--content);margin:0 auto;padding:20px 20px 100px}
+
+/* 요약 배너 */
+.summary-banner{background:linear-gradient(135deg,#c62828,#ef5350);border-radius:var(--radius-xl);padding:20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;color:#fff}
+.summary-left h2{font-size:20px;font-weight:900;margin-bottom:4px}
+.summary-left p{font-size:13px;opacity:.85}
+.summary-count{font-size:36px;font-weight:900;opacity:.9}
+
+/* 일괄삭제 버튼 */
+.clear-btn{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-full);transition:background 160ms,color 160ms,border-color 160ms;margin-bottom:14px;margin-left:auto;width:fit-content}
+.clear-btn:hover{background:var(--red-light);color:var(--red);border-color:var(--red)}
+
+.list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.list-title{font-size:14px;font-weight:700}
+.list-count{font-size:12px;color:var(--text-muted);background:var(--surface-offset);padding:3px 10px;border-radius:var(--radius-full)}
+
+.store-grid{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:540px){.store-grid{grid-template-columns:repeat(2,1fr)}}
+
+.store-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:box-shadow 180ms var(--ease),transform 180ms var(--ease),border-color 180ms var(--ease);box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.store-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--red)}
+.store-card:active{transform:translateY(0)}
+.badge{position:absolute;top:10px;left:0;font-size:10px;font-weight:700;padding:2px 8px 2px 10px;border-radius:0 var(--radius-full) var(--radius-full) 0;letter-spacing:.04em;text-transform:uppercase;color:#fff;z-index:1}
+.badge.hot{background:var(--red)}.badge.new{background:var(--green)}
+.store-logo{width:52px;height:52px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.store-logo svg{width:52px;height:52px}
+.store-info{flex:1;min-width:0}
+.store-name{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
+.store-name-jp{font-size:11px;color:var(--text-muted);font-weight:400}
+.store-desc{font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.store-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.discount-max{font-size:15px;font-weight:900;color:var(--red);white-space:nowrap}
+.discount-min{font-size:11px;color:var(--text-faint);white-space:nowrap}
+
+/* 찜 해제 버튼 */
+.unlike-btn{width:30px;height:30px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;background:var(--red-light);transition:background 160ms,transform 160ms;flex-shrink:0;z-index:2}
+.unlike-btn:hover{background:#ffcdd2}
+.unlike-btn:active{transform:scale(.85)}
+.unlike-btn svg{fill:var(--red);stroke:var(--red)}
+
+/* 빈 상태 */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;color:var(--text-muted);text-align:center;gap:14px}
+.empty-icon{font-size:56px;opacity:.35}
+.empty h3{font-size:16px;font-weight:700;color:var(--text)}
+.empty p{font-size:13px;max-width:26ch;line-height:1.7}
+.empty-link{display:inline-flex;align-items:center;gap:6px;margin-top:4px;padding:10px 20px;background:var(--red);color:#fff;border-radius:var(--radius-full);font-size:13px;font-weight:700;transition:background 160ms}
+.empty-link:hover{background:var(--red-hover)}
+
+/* 하단 탭바 */
+.bottom-nav{background:var(--surface);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom,0);position:fixed;bottom:0;left:0;right:0;max-width:720px;margin:0 auto}
+@media(min-width:960px){.bottom-nav{display:none}}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;color:var(--text-faint);transition:color 160ms}
+.nav-item.active{color:var(--red)}
+.nav-item svg{width:22px;height:22px}
+.nav-label{font-size:10px;font-weight:500}
+
+/* 삭제 애니메이션 */
+@keyframes fadeOut{to{opacity:0;transform:scale(.95)}}
+.removing{animation:fadeOut .25s var(--ease) forwards}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="./index.html" class="back-btn" aria-label="홈으로">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    </a>
+    <span class="header-title">❤️ 찜목록</span>
+    <button class="icon-btn" data-theme-toggle aria-label="다크모드">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="page-wrap" id="page-wrap">
+  <div class="empty"><div class="empty-icon">⏳</div><h3>불러오는 중...</h3></div>
+</div>
+
+<nav class="bottom-nav">
+  <button class="nav-item" onclick="location.href='./index.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    <span class="nav-label">홈</span>
+  </button>
+  <button class="nav-item active">
+    <svg viewBox="0 0 24 24" fill="var(--red)" stroke="var(--red)" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    <span class="nav-label">찜목록</span>
+  </button>
+</nav>
+
+<script>
+const ICONS={donki:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#FFD700"/><text x="26" y="22" text-anchor="middle" font-size="14" font-weight="900" fill="#e60012" font-family="sans-serif">ドン</text><text x="26" y="38" text-anchor="middle" font-size="11" font-weight="700" fill="#e60012" font-family="sans-serif">キホーテ</text></svg>`,matsukiyo:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#00843d"/><text x="26" y="24" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="sans-serif">マツ</text><text x="26" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="sans-serif">キヨシ</text></svg>`,isetan:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#1a237e"/><text x="26" y="34" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="serif">伊勢丹</text></svg>`,takashimaya:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#8b0000"/><text x="26" y="34" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="serif">高島屋</text></svg>`,cosmos:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#d81b60"/><text x="26" y="24" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">コスモス</text><text x="26" y="40" text-anchor="middle" font-size="10" font-weight="500" fill="rgba(255,255,255,.8)" font-family="sans-serif">COSMOS</text></svg>`,mitsui:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#e65100"/><text x="26" y="23" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="sans-serif">三井</text><text x="26" y="37" text-anchor="middle" font-size="9" font-weight="700" fill="rgba(255,255,255,.9)" font-family="sans-serif">OUTLET</text></svg>`,seven:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#1b5e20"/><rect x="0" y="18" width="52" height="17" fill="#c62828"/><text x="26" y="32" text-anchor="middle" font-size="20" font-weight="900" fill="#fff" font-family="sans-serif">7</text></svg>`,welcia:`<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="52" height="52" fill="#0d47a1"/><text x="26" y="24" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">ウエル</text><text x="26" y="40" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">シア</text></svg>`};
+
+function getLikes(){try{return JSON.parse(localStorage.getItem('jp_likes')||'[]');}catch{return[];}}
+function setLikes(arr){localStorage.setItem('jp_likes',JSON.stringify(arr));}
+function unlike(id){
+  const card=document.querySelector(`.store-card[data-id="${id}"]`);
+  if(card){
+    card.classList.add('removing');
+    card.addEventListener('animationend',()=>{
+      const likes=getLikes().filter(x=>x!==id);
+      setLikes(likes);
+      render();
+    },{once:true});
+  }
+}
+function clearAll(){
+  if(!confirm('찜목록을 모두 삭제할까요?')) return;
+  setLikes([]);render();
+}
+
+async function render(){
+  const likes=getLikes();
+  let stores=[];
+  try{const r=await fetch('./coupons.json');stores=await r.json();}catch{}
+  const liked=stores.filter(s=>likes.includes(s.id));
+  const wrap=document.getElementById('page-wrap');
+  if(!liked.length){
+    wrap.innerHTML=`<div class="empty">
+      <div class="empty-icon">🤍</div>
+      <h3>찜한 매장이 없어요</h3>
+      <p>쿠폰 목록에서 하트를 눌러 찜해보세요</p>
+      <a href="./index.html" class="empty-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        쿠폰 목록으로
+      </a>
+    </div>`;
+    return;
+  }
+  wrap.innerHTML=`
+    <div class="summary-banner">
+      <div class="summary-left">
+        <h2>내 찜목록</h2>
+        <p>저장된 매장 쿠폰을 확인해보세요</p>
+      </div>
+      <div class="summary-count">${liked.length}</div>
+    </div>
+    <button class="clear-btn" id="clear-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,6 5,6 21,6"/><path d="M19,6l-1,14a2,2,0,0,1-2,2H8a2,2,0,0,1-2-2L5,6"/><path d="M10,11v6M14,11v6"/></svg>
+      전체 삭제
+    </button>
+    <div class="list-header">
+      <span class="list-title">찜한 매장</span>
+      <span class="list-count">${liked.length}개</span>
+    </div>
+    <div class="store-grid">
+      ${liked.map(s=>`
+        <article class="store-card" data-id="${s.id}" tabindex="0" role="button" aria-label="${s.name} 상세보기">
+          ${s.badge?`<span class="badge ${s.badgeType}">${s.badge}</span>`:''}
+          <div class="store-logo">${ICONS[s.iconKey]||'<span style="font-size:24px">🏬</span>'}</div>
+          <div class="store-info">
+            <div class="store-name">${s.name}<span class="store-name-jp">${s.nameJp}</span></div>
+            <div class="store-desc">${s.desc}</div>
+          </div>
+          <div class="store-right">
+            <button class="unlike-btn" data-id="${s.id}" aria-label="찜 해제">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="var(--red)" stroke="var(--red)" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <div>
+              <div class="discount-max">${s.maxDiscount}</div>
+              <div class="discount-min">최소 ${s.minDiscount}</div>
+            </div>
+          </div>
+        </article>`).join('')}
+    </div>`;
+  document.querySelectorAll('.store-card').forEach(c=>{
+    c.addEventListener('click',()=>{location.href=`./detail.html?id=${c.dataset.id}`;});
+  });
+  document.querySelectorAll('.unlike-btn').forEach(btn=>{
+    btn.addEventListener('click',e=>{e.stopPropagation();unlike(+btn.dataset.id);});
+  });
+  const cb=document.getElementById('clear-btn');
+  if(cb) cb.addEventListener('click',clearAll);
+}
+(function(){const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';r.setAttribute('data-theme',d);const sun='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';const moon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';if(t){t.innerHTML=d==='dark'?sun:moon;t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);t.innerHTML=d==='dark'?sun:moon;});}})();
+render();
+</script>
+</body>
+</html>
